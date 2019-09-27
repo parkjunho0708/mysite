@@ -28,9 +28,9 @@
 	
 	<select id="searchList" parameterType="map" resultType="boardvo">
 		<![CDATA[
-			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no, board.o_no, board.depth 
+			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no as groupNo, board.o_no as orderNo, board.depth as depth 
 			from user, board 
-			where user.no = board.user_no and (board.title like '%'|| #{kwd} ||'%' or board.contents like '%'|| #{kwd} ||'%') and status = 'true' 
+			where user.no = board.user_no and (board.title like concat('%',#{kwd},'%') or board.contents like concat('%',#{kwd},'%')) and status = 'true' 
 			order by board.g_no desc, board.o_no asc limit #{startNum}, #{lastNum}
 		]]>
 	</select>
@@ -38,7 +38,7 @@
 	<select id="countAllPostData" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*) from user, board 
-			where user.no = board.user_no and (board.title like '%'|| #{kwd} ||'%' or board.contents like '%'|| #{kwd} ||'%') 
+			where user.no = board.user_no and (board.title like concat('%',#{kwd},'%') or board.contents like concat('%',#{kwd},'%')) 
 			order by board.g_no desc, board.o_no asc
 		]]>
 	</select>

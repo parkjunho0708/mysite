@@ -183,17 +183,12 @@ public class BoardController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Model model) {
-		System.out.println("board title 1 : " + title);
-		System.out.println("order no  1 : " + orderNo);
-		session = request.getSession();
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		
-		System.out.println("board title 2 : " + title);
-		System.out.println("order no  2 : " + orderNo);
 		boardVo.setOrderNo(orderNo + 1);
 		boardVo.setDepth(depth + 1);
 		boardService.replyUpdateOrderGroupNo(groupNo, boardVo.getOrderNo());
 		
+		session = request.getSession();
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardVo.setUserNo(authUser.getNo());
 		boardVo.setTitle(title);
 		boardVo.setContents(contents);

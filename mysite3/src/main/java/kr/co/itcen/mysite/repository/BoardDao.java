@@ -91,7 +91,17 @@ public class BoardDao {
 		return sqlSession.selectOne("board.getGroupOrderDepthNo", boardNo);
 	}
 	
+	public void replyUpdateOrderGroupNo(int groupNo, int orderNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		System.out.println("groupNo : " + groupNo);
+		map.put("groupNo", groupNo);
+		map.put("orderNo", orderNo);
+		sqlSession.update("board.updateOrderGroupNo", map);
+	}
 	
+	public void replyInsert(BoardVo vo) {
+		sqlSession.insert("board.insertReplyData", vo);
+	}
 	
 	
 	
@@ -148,58 +158,58 @@ public class BoardDao {
 	}
 	
 	// 답글 삽입
-	public Boolean replyInsert(BoardVo vo) {
-		Boolean result = false;
-
-		Connection connection = null;
-		Statement stmt = null;
-
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			connection = getConnection();
-
-			String sql = "insert into board values (null, ?, ?, ?, now(), ?, ?, ?, ?)"; // jdbc는 ;(세미콜론)이 있으면 쿼리가 또 있다고 인식
-			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, vo.getTitle());
-			pstmt.setString(2, vo.getContents());
-			pstmt.setInt(3, vo.getHit());
-			pstmt.setInt(4, vo.getGroupNo());
-			pstmt.setInt(5, vo.getOrderNo());
-			pstmt.setInt(6, vo.getDepth());
-			pstmt.setLong(7, vo.getUserNo());
-
-			int count = pstmt.executeUpdate();
-			result = (count == 1);
-
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery("select last_insert_id()");
-			if (rs.next()) {
-				Long no = rs.getLong(1);
-				vo.setNo(no);
-			}
-		} catch (SQLException e) {
-			System.out.println("error : " + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
+//	public Boolean replyInsert(BoardVo vo) {
+//		Boolean result = false;
+//
+//		Connection connection = null;
+//		Statement stmt = null;
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		try {
+//			connection = getConnection();
+//
+//			String sql = "insert into board values (null, ?, ?, ?, now(), ?, ?, ?, ?)"; // jdbc는 ;(세미콜론)이 있으면 쿼리가 또 있다고 인식
+//			pstmt = connection.prepareStatement(sql);
+//			pstmt.setString(1, vo.getTitle());
+//			pstmt.setString(2, vo.getContents());
+//			pstmt.setInt(3, vo.getHit());
+//			pstmt.setInt(4, vo.getGroupNo());
+//			pstmt.setInt(5, vo.getOrderNo());
+//			pstmt.setInt(6, vo.getDepth());
+//			pstmt.setLong(7, vo.getUserNo());
+//
+//			int count = pstmt.executeUpdate();
+//			result = (count == 1);
+//
+//			stmt = connection.createStatement();
+//			rs = stmt.executeQuery("select last_insert_id()");
+//			if (rs.next()) {
+//				Long no = rs.getLong(1);
+//				vo.setNo(no);
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("error : " + e);
+//		} finally {
+//			try {
+//				if (rs != null) {
+//					rs.close();
+//				}
+//				if (stmt != null) {
+//					stmt.close();
+//				}
+//				if (pstmt != null) {
+//					pstmt.close();
+//				}
+//				if (connection != null) {
+//					connection.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return result;
+//	}
 	
 	
 	

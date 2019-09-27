@@ -159,19 +159,62 @@ public class BoardController {
 	// 답글폼으로 이동
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String reply(
-			@RequestParam Long no, 
 			@ModelAttribute BoardVo boardVo,
-			HttpServletResponse response, 
-			Model model) {
+			@RequestParam Long no,
+			Model model
+			) {
 		boardVo = boardService.getGroupOrderDepth(no);
 		model.addAttribute("vo", boardVo);
 		return "/board/reply";
 	}
 	
+	// 답글 작성
+	@RequestMapping(value = "/reply/{no}/{groupNo}/{orderNo}/{depth}", method = RequestMethod.POST)
+	public String reply(
+			@PathVariable Long no,
+			@PathVariable int groupNo,
+			@PathVariable int orderNo,
+			@PathVariable int depth,
+			@RequestParam ("title") String title,
+			@RequestParam ("contents") String contents,
+			@ModelAttribute BoardVo boardVo,
+			HttpSession session, 
+			MultipartFile mfile,
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Model model) {
+		System.out.println("board title 1 : " + title);
+		System.out.println("order no  1 : " + orderNo);
+		session = request.getSession();
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		System.out.println("board title 2 : " + title);
+		System.out.println("order no  2 : " + orderNo);
+		boardVo.setOrderNo(orderNo + 1);
+		boardVo.setDepth(depth + 1);
+		boardService.replyUpdateOrderGroupNo(groupNo, boardVo.getOrderNo());
+		
+		boardVo.setUserNo(authUser.getNo());
+		boardVo.setTitle(title);
+		boardVo.setContents(contents);
+		boardVo.setGroupNo(groupNo);
+		boardVo.setStatus("true");
+		
+		String getFileNameFromMf = fileUpload(mfile);
+		boardVo.setFilename(getFileNameFromMf);
+		
+		System.out.println("boardVo : " + boardVo);
+		
+		boardService.replyInsert(boardVo);
+		System.out.println("board title 3 : " + title);
+		System.out.println("order no  3 : " + orderNo);
+		return "redirect:/board/list?page=1";
+	}
+	
 	// 파일 처리 메소드
 	public String fileUpload(MultipartFile fileUpload) {
 		String imgPath = "assets\\images";
-		String realPath = "D:\\itcen\\eclipse-workspace\\mysite3\\src\\main\\webapp\\";
+		String realPath = "D:\\itcen\\eclipse-workspace\\mysite\\mysite3\\src\\main\\webapp\\";
 		System.out.println("realPath : " + realPath);
 		String originalFileName;
 		

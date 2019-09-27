@@ -14,11 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board/reply" enctype="multipart/form-data">
-					<input type="hidden" name='no' value='${param.no}' />
-					<input type="hidden" name='groupno' value='${vo.groupNo}' />
-					<input type="hidden" name='orderno' value='${vo.orderNo}' />
-					<input type="hidden" name='depth' value='${vo.depth}' />
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board/reply/${vo.no}/${vo.groupNo}/${vo.orderNo}/${vo.depth}" enctype="multipart/form-data">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">답글쓰기</th>
@@ -30,18 +26,18 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="contents" name="contents"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 						<tr>
-							<td class="label">이미지 업로드</td>
+							<td class="label">파일 업로드</td>
 							<td>
-								<input type="file" name="image">
+								<input type="file" name="mfile">
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath}/board?a=list">취소</a>
+						<a href="${pageContext.servletContext.contextPath}/board/list?page=1">취소</a>
 						<input type="submit" value="답글등록">
 					</div>
 				</form>				

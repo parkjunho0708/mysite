@@ -67,6 +67,14 @@ public class BoardService {
 		return boardDao.getGroupOrderDepth(boardNo);
 	}
 	
+	public void replyUpdateOrderGroupNo(int groupNo, int orderNo) {
+		boardDao.replyUpdateOrderGroupNo(groupNo, orderNo);
+	}
+	
+	public void replyInsert(BoardVo vo) {
+		boardDao.replyInsert(vo);
+	}
+	
 	
 	
 }

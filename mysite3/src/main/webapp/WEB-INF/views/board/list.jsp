@@ -28,6 +28,9 @@
 						<th>글쓴이</th>
 						<th>조회수</th>
 						<th>작성일</th>
+						<th>그룹번호</th>
+						<th>그룹내순서</th>
+						<th>깊이</th>
 						<th>&nbsp;</th>
 					</tr>				
 					<tr>
@@ -46,6 +49,9 @@
 						<td>${vo.userName}</td>
 						<td>${vo.hit}</td>
 						<td>${vo.regDate}</td>
+						<td>${vo.groupNo}</td>
+						<td>${vo.orderNo}</td>
+						<td>${vo.depth}</td>
 						<c:if test="${authUser.no == vo.userNo}">
 							<a href="${pageContext.servletContext.contextPath}/board?a=deleteform&no=${vo.no}" class="del">삭제</a>
 						</c:if>

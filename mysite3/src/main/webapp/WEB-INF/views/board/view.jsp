@@ -40,7 +40,7 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath}/board/reply?no=${param.no}">답글</a>
-					<a href="${pageContext.servletContext.contextPath}/board/list">글목록</a>
+					<a href="${pageContext.servletContext.contextPath}/board/list?page=1">글목록</a>
 					${authUser.no}
 					${vo.userNo}
 					<c:if test="${authUser.no == vo.userNo}">

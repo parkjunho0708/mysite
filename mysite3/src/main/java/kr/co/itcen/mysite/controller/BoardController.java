@@ -206,6 +206,29 @@ public class BoardController {
 		return "redirect:/board/list?page=1";
 	}
 	
+	// 삭제 페이지로 이동
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(
+			@RequestParam Long no,
+			Model model) {
+		model.addAttribute("no", no);
+		return "/board/delete";
+	}
+	
+	// 삭제 페이지에서 비밀번호 입력해서 데이터 삭제
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(
+			@RequestParam Long no,
+			@RequestParam String password,
+			HttpServletRequest request,
+			Model model) {
+		HttpSession session = request.getSession();
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		boardService.delete(no, authUser.getNo(), password);
+		model.addAttribute("no", no);
+		return "redirect:/board/list?page=1";
+	}
+	
 	// 파일 처리 메소드
 	public String fileUpload(MultipartFile fileUpload) {
 		String imgPath = "assets\\images";

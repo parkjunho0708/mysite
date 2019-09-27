@@ -14,14 +14,12 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form method="post" action="${pageContext.servletContext.contextPath}/board">
-					<input type="hidden" name="a" value="delete">
-					<input type="hidden" name="no" value="${param.no}">
+				<form method="post" action="${pageContext.servletContext.contextPath}/board/delete?no=${param.no}">
 					<label>비밀번호</label>
 					<input type="password" name="password">
 					<input type="submit" value="확인">
 				</form>
-				<a href="${pageContext.servletContext.contextPath}/board?a=list">게시판 리스트</a>
+				<a href="${pageContext.servletContext.contextPath}/board/list?page=1">게시판 리스트</a>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

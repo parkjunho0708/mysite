@@ -11,7 +11,7 @@
 
 	<select id="allBoardDataList" parameterType="map" resultType="boardvo">
 		<![CDATA[
-			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no as groupNo, board.o_no as orderNo, board.depth as depth 
+			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no as groupNo, board.o_no as orderNo, board.depth as depth, user.no as userNo 
 			from user, board where user.no = board.user_no and board.status = 'true' 
 			order by board.g_no desc, board.o_no asc 
 			limit #{startNum}, #{lastNum}
@@ -91,5 +91,12 @@
 			 #{orderNo}, #{depth}, #{filename}, #{status}, #{userNo})
 		]]>
 	</insert>
+	
+	<delete id="deleteData" parameterType="map">
+		<![CDATA[
+			update board set status = 'false' where no = #{boardNo} and 
+			(select user.password from user where user.no = #{userNo} and user.password = #{password})
+		]]>
+	</delete>
 
 </mapper>

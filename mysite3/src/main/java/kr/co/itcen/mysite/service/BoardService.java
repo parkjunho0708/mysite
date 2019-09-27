@@ -74,6 +74,10 @@ public class BoardService {
 	public void replyInsert(BoardVo vo) {
 		boardDao.replyInsert(vo);
 	}
+
+	public void delete(Long no, Long userno, String password) {
+		boardDao.delete(no, userno, password);
+	}
 	
 	
 	

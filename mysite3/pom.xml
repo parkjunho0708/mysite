@@ -71,14 +71,6 @@
 			<version>1.4</version>
 		</dependency>
 
-
-		<!-- jstl -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
 		<!-- common fileupload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>

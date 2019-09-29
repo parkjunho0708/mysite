@@ -11,9 +11,17 @@
 
 	<select id="allBoardDataList" parameterType="map" resultType="boardvo">
 		<![CDATA[
-			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no as groupNo, board.o_no as orderNo, board.depth as depth, user.no as userNo 
-			from user, board where user.no = board.user_no and board.status = 'true' 
-			order by board.g_no desc, board.o_no asc 
+			select board.no, 
+			board.title, 
+			user.name as userName, 
+			board.hit, 
+			date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, 
+			board.g_no as groupNo, 
+			board.o_no as orderNo, 
+			board.depth as depth, 
+			board.status as status, 
+			user.no as userNo 
+			from user, board where user.no = board.user_no order by board.g_no desc, board.o_no asc 
 			limit #{startNum}, #{lastNum}
 		]]>
 	</select>

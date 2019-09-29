@@ -35,12 +35,22 @@
 						<c:if test="${vo.depth > 0}">
 							<td style='padding-left:${40 * vo.depth}px'>
 								<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
-								<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}&username=${vo.userName}">${vo.title}</a>
+								<c:if test="${vo.status eq 'true'}">
+									<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}&username=${vo.userName}">${vo.title}</a>
+								</c:if>
+								<c:if test="${vo.status eq 'false'}">
+									[삭제된 댓글입니다.]
+								</c:if>
 							</td>
 						</c:if>
 						<c:if test="${vo.depth == 0}">
 							<td>
-								<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}&username=${vo.userName}">${vo.title}</a>
+								<c:if test="${vo.status eq 'true'}">
+									<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}&username=${vo.userName}">${vo.title}</a>
+								</c:if>
+								<c:if test="${vo.status eq 'false'}">
+									[삭제된 댓글입니다.]
+								</c:if>
 							</td>
 						</c:if>
 						<td>${vo.userName}</td>

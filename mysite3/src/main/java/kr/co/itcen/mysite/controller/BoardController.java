@@ -1,10 +1,17 @@
 package kr.co.itcen.mysite.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +38,7 @@ import kr.co.itcen.mysite.vo.UserVo;
 @RequestMapping("/board")
 public class BoardController {
 
-	private static final Log LOG = LogFactory.getLog(BoardController.class);
+	private static final Log Log = LogFactory.getLog(BoardController.class);
 
 	@Autowired
 	private BoardService boardService;
@@ -41,7 +48,9 @@ public class BoardController {
 
 	// navigation에서 게시판을 눌렀을 때, 실행되는 메소드
 	@RequestMapping(value = "/list")
-	public String index(@RequestParam int page, Model model) {
+	public String index(
+			@RequestParam int page, 
+			Model model) {
 		PageVo pageInfo = pagingProcess(page, null);
 		List<BoardVo> list = boardService.getList(pageInfo.getStartRow() - 1, pageInfo.getRowsPerPage());
 		model.addAttribute("list", list);
@@ -61,25 +70,24 @@ public class BoardController {
 			@ModelAttribute BoardVo boardVo, 
 			HttpSession session, 
 			HttpServletRequest request,
-			MultipartFile mfile,
+			MultipartFile mfile, 
 			Model model) throws Exception {
 		session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardVo.setUserNo(authUser.getNo());
-		
+
 		String getFileNameFromMf = fileUpload(mfile);
 		boardVo.setFilename(getFileNameFromMf);
 		boardService.insert(boardVo);
 		return "redirect:/board/list?page=1";
 	}
-	
+
 	// 검색한 데이터를 리스트로 출력해주는 메소드
 	@RequestMapping(value = "/searchlist/{page}", method = RequestMethod.POST)
 	public String searchlist(
-			@PathVariable int page,
-			@RequestParam String kwd,
-			Model model
-			) {
+			@PathVariable int page, 
+			@RequestParam String kwd, 
+			Model model) {
 		PageVo pageInfo = pagingProcess(page, kwd);
 		System.out.println("page : " + page);
 		List<BoardVo> list = boardService.search(pageInfo.getStartRow() - 1, pageInfo.getRowsPerPage(), kwd);
@@ -87,62 +95,63 @@ public class BoardController {
 		model.addAttribute("pageInfo", pageInfo);
 		return "/board/list";
 	}
-	
+
+	// 게시판에서 글을 선택했을 때, 게시글에 대한 정보 호출 및 조회수 증가
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(
-			@RequestParam Long no,
-			@RequestParam String username,
+			@RequestParam Long no, 
+			@RequestParam String username, 
 			HttpSession session,
-			@ModelAttribute UserVo userVo,
-			@ModelAttribute BoardVo boardVo,
+			@ModelAttribute UserVo userVo, 
+			@ModelAttribute BoardVo boardVo, 
 			Model model) {
 		boardService.hitUpdate(no);
 		Long userno = 0L;
-		
+
 		if (session.getAttribute("authUser") != null) {
 			userVo = (UserVo) session.getAttribute("authUser");
 			userno = userVo.getNo();
 			model.addAttribute("userno", userno);
 		}
-		
+
 		boardVo = boardService.viewGetOne(no, username);
 		model.addAttribute("vo", boardVo);
 		return "/board/view";
 	}
-	
+
 	// 수정폼으로 이동
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(
-			@RequestParam Long no,
-			@RequestParam String username,
+			@RequestParam Long no, 
+			@RequestParam String username, 
 			@ModelAttribute BoardVo boardVo,
-			HttpServletResponse response,
+			HttpServletResponse response, 
 			Model model) {
 		boardVo = boardService.viewGetOne(no, username);
 		model.addAttribute("vo", boardVo);
 		return "/board/modify";
 	}
-	
+
 	// 수정폼에서 데이터 수정
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.POST)
 	public String modify(
-			@PathVariable Long no,
-			@ModelAttribute BoardVo boardVo,
+			@PathVariable Long no, 
+			@ModelAttribute BoardVo boardVo, 
 			HttpSession session,
-			HttpServletRequest request,
-			HttpServletResponse response,
+			HttpServletRequest request, 
+			HttpServletResponse response, 
 			Model model) {
-		 // board no 값 설정
+		// board no 값 설정
 		boardService.modify(boardVo);
-		
+
 		session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardVo.setUserName(authUser.getName());
 		boardVo.setNo(no);
-		
+
 		boardVo = boardService.viewGetOne(boardVo);
 		model.addAttribute("vo", boardVo);
-		
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out;
 		try {
@@ -155,38 +164,37 @@ public class BoardController {
 
 		return "/board/modify";
 	}
-	
+
 	// 답글폼으로 이동
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String reply(
-			@ModelAttribute BoardVo boardVo,
-			@RequestParam Long no,
-			Model model
-			) {
+			@ModelAttribute BoardVo boardVo, 
+			@RequestParam Long no, 
+			Model model) {
 		boardVo = boardService.getGroupOrderDepth(no);
 		model.addAttribute("vo", boardVo);
 		return "/board/reply";
 	}
-	
+
 	// 답글 작성
 	@RequestMapping(value = "/reply/{no}/{groupNo}/{orderNo}/{depth}", method = RequestMethod.POST)
 	public String reply(
-			@PathVariable Long no,
-			@PathVariable int groupNo,
+			@PathVariable Long no, 
+			@PathVariable int groupNo, 
 			@PathVariable int orderNo,
-			@PathVariable int depth,
-			@RequestParam ("title") String title,
-			@RequestParam ("contents") String contents,
-			@ModelAttribute BoardVo boardVo,
+			@PathVariable int depth, 
+			@RequestParam("title") String title, 
+			@RequestParam("contents") String contents,
+			@ModelAttribute BoardVo boardVo, 
 			HttpSession session, 
-			MultipartFile mfile,
+			MultipartFile mfile, 
 			HttpServletRequest request,
-			HttpServletResponse response,
+			HttpServletResponse response, 
 			Model model) {
 		boardVo.setOrderNo(orderNo + 1);
 		boardVo.setDepth(depth + 1);
 		boardService.replyUpdateOrderGroupNo(groupNo, boardVo.getOrderNo());
-		
+
 		session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardVo.setUserNo(authUser.getNo());
@@ -194,32 +202,32 @@ public class BoardController {
 		boardVo.setContents(contents);
 		boardVo.setGroupNo(groupNo);
 		boardVo.setStatus("true");
-		
+
 		String getFileNameFromMf = fileUpload(mfile);
 		boardVo.setFilename(getFileNameFromMf);
-		
+
 		System.out.println("boardVo : " + boardVo);
-		
+
 		boardService.replyInsert(boardVo);
 		System.out.println("board title 3 : " + title);
 		System.out.println("order no  3 : " + orderNo);
 		return "redirect:/board/list?page=1";
 	}
-	
+
 	// 삭제 페이지로 이동
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(
-			@RequestParam Long no,
+			@RequestParam Long no, 
 			Model model) {
 		model.addAttribute("no", no);
 		return "/board/delete";
 	}
-	
+
 	// 삭제 페이지에서 비밀번호 입력해서 데이터 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(
-			@RequestParam Long no,
-			@RequestParam String password,
+			@RequestParam Long no, 
+			@RequestParam String password, 
 			HttpServletRequest request,
 			Model model) {
 		HttpSession session = request.getSession();
@@ -228,21 +236,80 @@ public class BoardController {
 		model.addAttribute("no", no);
 		return "redirect:/board/list?page=1";
 	}
-	
-	// 파일 처리 메소드
+
+	// 파일 다운로드
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	public void downloadFile(
+			@RequestParam String filename, 
+			HttpServletResponse response) {
+		String sDownloadPath = "D:\\itcen\\eclipse-workspace\\mysite\\mysite3\\src\\main\\webapp\\assets\\images\\";
+        String sFilePath = sDownloadPath + filename;
+        
+        byte b[] = new byte[4096];
+        FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(sFilePath);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+        
+        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+        String sMimeType = mimeTypesMap.getContentType(sFilePath);
+        
+		if (sMimeType == null) {
+			sMimeType = "application/octet-stream";
+		}
+        
+        response.setContentType(sMimeType);
+        
+        String sEncoding;
+		try {
+			sEncoding = new String(filename.getBytes("utf-8"));
+			response.setHeader("Content-Disposition", "attachment; filename= " + sEncoding);
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+        
+        
+        ServletOutputStream servletOutStream = null;
+		try {
+			servletOutStream = response.getOutputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+        int numRead;
+        try {
+			while((numRead = fileInputStream.read(b,0,b.length))!= -1){
+			    servletOutStream.write(b,0,numRead);            
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+		try {
+			servletOutStream.flush();
+			servletOutStream.close();
+			fileInputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 파일 업로드
 	public String fileUpload(MultipartFile fileUpload) {
 		String imgPath = "assets\\images";
 		String realPath = "D:\\itcen\\eclipse-workspace\\mysite\\mysite3\\src\\main\\webapp\\";
 		System.out.println("realPath : " + realPath);
 		String originalFileName;
-		
+
 		originalFileName = fileUpload.getOriginalFilename();
 
 		StringBuffer path = new StringBuffer();
 		path.append(realPath).append(imgPath).append("\\");
 		path.append(originalFileName);
 		System.out.println("path : " + path);
-		
+
 		if (!originalFileName.equals("")) {
 			File f = new File(path.toString());
 			try {

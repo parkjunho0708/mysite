@@ -34,7 +34,7 @@
 					<tr>
 						<td class="label">파일 이름</td>
 						<td>
-							<h3>${vo.filename}</h3>
+							<a href="${pageContext.servletContext.contextPath}/board/download?filename=${vo.filename}">${vo.filename}</a>
 						</td>
 					</tr>
 				</table>

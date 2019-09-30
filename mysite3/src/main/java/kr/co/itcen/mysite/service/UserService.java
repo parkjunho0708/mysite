@@ -31,7 +31,12 @@ public class UserService {
 		return userDao.update(vo);
 	}
 
+	// 수정된 사용자 정보를 update.jsp로 다시 불러옴
 	public UserVo selectUpdatedUserData(Long no) {
 		return userDao.selectUpdatedUserData(no);
+	}
+
+	public Boolean existUser(String email) {
+		return userDao.get(email) != null;
 	}
 }

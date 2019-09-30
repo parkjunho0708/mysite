@@ -15,13 +15,31 @@
 	http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
-	
+
 	<!-- file upload mapping -->
-	<mvc:resources mapping="/images/**" location="file:${fileSystemStore.fileSystemStorageLocation}"/>
+	<mvc:resources mapping="/images/**"
+		location="file:${fileSystemStore.fileSystemStorageLocation}" />
 
 	<!-- ViewResolver 설정 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -32,6 +50,7 @@
 	</bean>
 
 	<context:annotation-config />
-	<context:component-scan base-package="kr.co.itcen.mysite.controller, kr.co.itcen.mysite.exception" />
+	<context:component-scan
+		base-package="kr.co.itcen.mysite.controller, kr.co.itcen.mysite.exception" />
 
 </beans>

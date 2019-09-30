@@ -383,16 +383,16 @@ public class BoardController {
 		pageInfo.setTotalPages(totalPages);
 		pageInfo.setTotalRows(totalRows);
 
-//		System.out.println("======= page information =======");
-//		System.out.println(pageInfo.getCurrentPage());
-//		System.out.println(pageInfo.getCurrentBlock());
-//		System.out.println(pageInfo.getRowsPerPage());
-//		System.out.println(pageInfo.getPagesPerBlock());
-//		System.out.println(pageInfo.getStartRow());
-//		System.out.println(pageInfo.getEndRow());
-//		System.out.println(pageInfo.getTotalBlocks());
-//		System.out.println(pageInfo.getTotalPages());
-//		System.out.println(pageInfo.getTotalRows());
+		System.out.println("======= page information =======");
+		System.out.println(pageInfo.getCurrentPage());
+		System.out.println(pageInfo.getCurrentBlock());
+		System.out.println(pageInfo.getRowsPerPage());
+		System.out.println(pageInfo.getPagesPerBlock());
+		System.out.println(pageInfo.getStartRow());
+		System.out.println(pageInfo.getEndRow());
+		System.out.println(pageInfo.getTotalBlocks());
+		System.out.println(pageInfo.getTotalPages());
+		System.out.println(pageInfo.getTotalRows());
 
 		return pageInfo;
 	}

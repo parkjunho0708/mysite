@@ -79,6 +79,4 @@ public class BoardService {
 		boardDao.delete(no, userno, password);
 	}
 	
-	
-	
 }

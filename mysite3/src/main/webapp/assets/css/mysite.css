@@ -12,7 +12,7 @@ div#navigation	{ float:left; width:220px;  }
 div#footer		{ clear:both; width:100% }
 
 /* header */
-div#header	h1				{ height:70px; line-height:70px; margin:0; padding-left:10px; color:#79B30B }
+div#header	p			{ height:70px; line-height:70px; margin:0px; padding-left:20px; color:purple; font-size: 20px; font-weight: bold;}
 div#header	ul				{ height:20px; margin:0 20px 10px 0 } 
 div#header	li				{ float:right }
 div#header	li a 			{ color:#4F4F4F; font-weight:bold; margin-left:10px; text-decoration:none; }

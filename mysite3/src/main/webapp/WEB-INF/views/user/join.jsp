@@ -43,6 +43,9 @@ $(function(){
 				
 				$("#btn-check-email").hide();
 				$("#img-checked").show();
+			},
+			error: function(xhr, error){
+				console.error("error : " + error);
 			}
 		});
 		

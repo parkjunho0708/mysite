@@ -6,9 +6,9 @@ body			{ font:0.75em "맑은 고딕", 돋움, 굴림; text-align:center }
 ul, ol			{ list-style-type: none }
 
 /* layout */
-div#container	{ text-align:left; width:700px; margin:0 auto; background-color:#EEE }
-div#content		{ float:right; width:580px; background-color:#fff }
-div#navigation	{ float:left; width:120px;  }
+div#container	{ text-align:left; width:1225px; margin:0 auto; background-color:#EEE }
+div#content		{ border: black 1px solid; float:right; width:1000px; background-color:#fff }
+div#navigation	{ float:left; width:220px;  }
 div#footer		{ clear:both; width:100% }
 
 /* header */
@@ -19,8 +19,8 @@ div#header	li a 			{ color:#4F4F4F; font-weight:bold; margin-left:10px; text-dec
 
 
 /* navigation */
-div#navigation ul			{ width:118px; margin-top:1px }
-div#navigation li			{ width:118px; background-color:#E9E9E9; border:1px solid #DADADA; margin-top:-1px }
+div#navigation ul			{ width:220px; margin-top:1px }
+div#navigation li			{ width:220px; background-color:#E9E9E9; border:1px solid #DADADA; margin-top:-1px }
 div#navigation li a			{ display:block; color:#4F4F4F; width:98px; font-weight:bold; padding:5px 10px; font-size:1.1em }
 div#navigation li.selected	{ background:#E0E0E0 }
 div#navigation li a:link	{ color:#4F4F4F; text-decoration:none; }

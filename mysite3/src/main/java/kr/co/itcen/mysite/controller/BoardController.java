@@ -1,7 +1,5 @@
 package kr.co.itcen.mysite.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -269,7 +267,6 @@ public class BoardController {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-        
         
         ServletOutputStream servletOutStream = null;
 		try {

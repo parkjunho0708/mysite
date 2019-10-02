@@ -53,6 +53,10 @@
 			<mvc:mapping path="/user/auth"/>
 			<bean class="kr.co.itcen.mysite.security.LoginInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"/>
+			<bean class="kr.co.itcen.mysite.security.LogoutInterceptor"/>
+		</mvc:interceptor>
 		
 	</mvc:interceptors>
 

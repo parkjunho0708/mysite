@@ -10,6 +10,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.servletContext.contextPath}/assets/css/main.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.servletContext.contextPath}/assets/css/slide.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/assets/js/gallery.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -48,6 +49,12 @@
 						<span class="dot"></span>
 						<span class="dot"></span>
 					</div>
+				</div>
+				<div id="site-introduction">
+				<input type="button" value="Select All" onclick="selectAll(this, event);">
+				<input type="button" value="Play Slide Show" onclick="slideShow(this, event);">
+				<hr>
+				
 				</div>
 			</div>
 		</div>

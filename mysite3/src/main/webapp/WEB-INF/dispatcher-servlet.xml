@@ -51,6 +51,8 @@
 		-->
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth"/>
+			<mvc:mapping path="/user/update"/>
+            <mvc:mapping path="/user/delete"/>
 			<bean class="kr.co.itcen.mysite.security.LoginInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>

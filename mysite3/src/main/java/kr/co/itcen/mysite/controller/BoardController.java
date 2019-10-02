@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.itcen.mysite.service.BoardService;
 import kr.co.itcen.mysite.service.FileUploadService;
+import kr.co.itcen.mysite.service.UserService;
 import kr.co.itcen.mysite.vo.BoardVo;
 import kr.co.itcen.mysite.vo.PageVo;
 import kr.co.itcen.mysite.vo.UserVo;
@@ -154,7 +157,7 @@ public class BoardController {
 		PrintWriter out;
 		try {
 			out = response.getWriter();
-			out.println("<script>alert('회원정보가 수정되었습니다.');</script>");
+			out.println("<script>alert('게시글정보가 수정되었습니다.');</script>");
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

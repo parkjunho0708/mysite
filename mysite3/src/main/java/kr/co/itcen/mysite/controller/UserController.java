@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.itcen.mysite.security.Auth;
 import kr.co.itcen.mysite.security.AuthUser;
+import kr.co.itcen.mysite.security.Auth.Role;
 import kr.co.itcen.mysite.service.UserService;
 import kr.co.itcen.mysite.vo.UserVo;
 
-@Auth
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -86,14 +86,21 @@ public class UserController {
 //		return "user/update";
 //	}
 	
-	@Auth("USER")
+	@Auth(role = Role.USER)
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(
-			@ModelAttribute @AuthUser UserVo authUser) {
+	public String update(@AuthUser UserVo authUser, Model model) {
+		System.out.println("update : " + authUser);
 		authUser = userService.getUser(authUser.getNo());
+		model.addAttribute("userVo", authUser);
+
+		if (authUser == null) {
+			return "redirect:/main";
+		}
+
 		return "user/update";
 	}
 
+	@Auth(role = Role.USER)
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(
 			@ModelAttribute @Valid UserVo vo, 

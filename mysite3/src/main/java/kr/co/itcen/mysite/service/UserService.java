@@ -41,6 +41,6 @@ public class UserService {
 	}
 
 	public UserVo getUser(Long no) {
-		return null;
+		return userDao.get(no);
 	}
 }

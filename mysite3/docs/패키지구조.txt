@@ -1,0 +1,20 @@
+src/main/java
+    |
+    |- kr.co.itcen.springcontainer.user
+    |- kr.co.itcen.springcontainer.soundsystem
+    |
+    |
+    |
+    |- kr.co.itcen.springcontainer.videosystem
+    |- kr.co.itcen.springcontainer.test
+    |   | 
+    |   |---- ContainerTest.java
+    |
+    |- config.user
+    |- config.soundsystem
+    |- config.videosystem
+
+src/main/resources
+    |- config.user
+    |    |- applicationContext01.xml (Annotation Scanning)
+    |    |- applicationContext02.xml (Bean Configuration)

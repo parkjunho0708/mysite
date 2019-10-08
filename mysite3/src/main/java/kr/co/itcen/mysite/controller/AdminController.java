@@ -4,8 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.itcen.mysite.security.Auth;
+import kr.co.itcen.mysite.security.Auth.Role;
 
-@Auth("ADMIN")
+@Auth(role=Role.ADMIN)
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

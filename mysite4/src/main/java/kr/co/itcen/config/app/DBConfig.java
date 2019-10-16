@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement // AOP를 걸어줌.
-@PropertySource("classpath:kr/co/itcen/config/app/properties/jdbc.properties")
+@PropertySource("classpath:kr/co/itcen/mysite/app/mybatis/properties/jdbc.properties")
 public class DBConfig {
 	
 	@Autowired

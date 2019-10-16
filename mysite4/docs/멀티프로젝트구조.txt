@@ -1,0 +1,35 @@
+hellospring 
+   |-- Web  Application Context 
+      (spring-servlet.xml <- ClassPathWebXmlApplicationContext)
+
+ hellospring2 
+   |-- Web  Application Context 
+      (WebConfig.java <- AnnotationConfigWebApplicationContext)
+
+
+
+ mysite config
+   |-- Web  Application Context (dispathcher-servlet.xml -> WebConfig.java)
+   |-- Root Application Context (applicationContext.xml  -> AppConfig.java)
+
+
+ MultiPorject
+
+ mysite
+   |----- mysite2 (Servlet/JSP, Model2, MVC)
+   |----- mysite3 (Spring MVC, XML Config)
+   |----- mysite4 (Spring MVC, Java Config1)
+   |----- mysite5 (Spring MVC, Java Config2)
+   |----- mysite6 (Spring Boot,Java Config, yaml properties)
+
+
+
+
+ jblog3
+ 
+ 1) MultiProject -> jblog
+ 2) jblog4 (Spring MVC, Java Config1)   
+    
+ jblog
+   |---- jblog3 (Spring MVC, XML Config)
+   |---- jblog4 (Spring MVC, Java Config1) ***  

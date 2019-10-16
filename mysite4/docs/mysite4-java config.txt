@@ -1,0 +1,55 @@
+mysite4 - java config version
+
+ 1. 메이븐 프로젝트 mysite4 (자식 Module)
+ 2. POM 설정
+ 3. web.xml
+
+ 4. AppConfig 설정
+    - DBConfig
+    - MyBatis
+
+ 5. WebConfig 설정
+    - MVCConfig(ViewResolver, MessageConverter, ... )
+    - SecurityConfig(Interceptor, ArgumentResolver)
+    - MessageConfig
+    - FileuploadConfig
+ 
+ 6. GlobalExceptionHandler
+ 7. slf4j(Logback)
+
+ kr.co.itcen.mysite.config
+ kr.co.itcen.config.app
+ kr.co.itcen.mysite.app.mybatis
+
+ mysite4(Project Root)
+    |
+    |-- /WEB-INF
+           |---- classes[src/main/java, src/main/resources]
+                    |
+		    |-- kr
+                        |-- co
+                            |-- itecen
+                                   |-- mysite
+                                   |     |-- config
+                                   |     |     |---- AppConfig.class
+                                   |     |     |---- WebConfig.class
+                                   |     | 
+                                   |     |--  app
+                                   |     |     |---- mybatis
+                                   |     |             |---- configuration.xml
+                                   |     |             |---- mapper
+                                   |     |                      |-- user.xml
+                                   |     |                      |-- board.xml
+                                   |     |
+                                   |     |    
+                                   |     |
+                                   |-- config
+                                         |--- app
+                                         |     |---- DBConfig.class
+                                         |     |---- MyBatisConfig.class
+                                         |---- web  
+                                               |---- MVCConfig.class
+                                               |---- SecurityConfig.class
+                                               |---- MessageConfig.class
+                                               |---- FileuploadConfig.class
+ 

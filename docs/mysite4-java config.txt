@@ -1,0 +1,72 @@
+mysite4 - java config version
+
+ 1. 메이븐 프로젝트 mysite4 (자식 Module)
+ 2. POM 설정
+ 3. web.xml
+
+ 4. AppConfig 설정
+    - DBConfig
+    - MyBatis
+
+ 5. WebConfig 설정
+    - MVCConfig(ViewResolver, MessageConverter, ... )
+    - SecurityConfig(Interceptor, ArgumentResolver)
+    - MessageConfig
+    - FileuploadConfig
+ 
+ 6. GlobalExceptionHandler
+ 7. slf4j(Logback)
+
+ kr.co.itcen.mysite.config.app
+ kr.co.itcen.config.app
+
+ kr.co.itcen.       config.app.properties
+ kr.co.itcen.       config.web.properties X
+ kr.co.itcen.mysite.config.app.properties X
+ kr.co.itcen.mysite.config.web.properties 
+ kr.co.itcen.mysite.config.app.mybatis
+
+
+
+
+ kr.co.itcen.mysite.config.web.messages
+
+ MVCConfig <---- WebMvcConfigureAdapter
+
+ mysite4(Project Root)
+    |
+    |-- /WEB-INF
+           |---- classes[src/main/java, src/main/resources]
+                    |
+		    |-- kr
+                        |-- co
+                            |-- itecen
+                                   |-- mysite
+                                   |     |-- config
+                                   |     |     |-- AppConfig.class
+                                   |     |     |-- WebConfig.class
+                                   |     |     |-- app
+                                   |     |     |   |-- mybatis
+                                   |     |     |         |-- configuration.xml
+                                   |     |     |         |---- mapper
+                                   |     |     |                |-- user.xml
+                                   |     |     |                |-- board.xml
+                                   |     |     |-- web
+                                   |     |          |- messages
+                                   |     |          |   |-- messages_ko
+                                   |     |          |
+                                   |     |          |- properties
+                                   |     |             |- multipart.properties 
+                                   |-- config
+                                         |--- app
+                                         |     |---- DBConfig.class
+                                         |     |---- MyBatisConfig.class
+                                         |     |---- properties
+                                         |              |--- jdbc.properties  
+                                         |       
+                                         |---- web  
+                                               |---- MVCConfig.class
+                                               |---- SecurityConfig.class
+                                               |---- MessageConfig.class
+                                               |---- FileuploadConfig.class
+                                               |---- properties 

@@ -17,71 +17,11 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>text/html; charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json; charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-		
-		<!-- Argument Resolvers -->
-		<mvc:argument-resolvers>
-			<bean class="kr.co.itcen.mysite.security.AuthUserHandlerMethodArgumentResolver" />
-		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
-	
-	<!-- Interceptor -->
-	<mvc:interceptors>
-	
-		<!-- 
-		<mvc:interceptor>
-			<mvc:mapping path="/user/**"/>
-			<bean class="kr.co.itcen.mysite.interceptor.MyInterceptor02"/>
-		</mvc:interceptor> 
-		-->
-		<mvc:interceptor>
-			<mvc:mapping path="/user/auth"/>
-			<bean class="kr.co.itcen.mysite.security.LoginInterceptor"/>
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/logout"/>
-			<bean class="kr.co.itcen.mysite.security.LogoutInterceptor"/>
-		</mvc:interceptor>
-		
-	</mvc:interceptors>
 
 	<!-- file upload mapping -->
 	<mvc:resources mapping="/images/**"
 		location="file:${fileSystemStore.fileSystemStorageLocation}" />
-
-	<!-- ViewResolver 설정 -->
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/views/" /> <!-- view 이름을 넘겨주면 그 이름앞에 path를 붙여주겠다. -->
-		<property name="suffix" value=".jsp" /> <!-- jsp 확장자명을 붙여준다. -->
-		<property name="order" value="1" /> <!-- 첫번째로 찾아라. -->
-	</bean>
-
-	<!-- MessageSource -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-	   <property name="basenames">
-	      <list>
-			<value>messages/messages_ko</value>
-	      </list>
-	   </property>
-	</bean>
 	
 	<context:annotation-config />
 	<context:component-scan

@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement // AOP를 걸어줌.
-@PropertySource("classpath:kr/co/itcen/mysite/app/mybatis/properties/jdbc.properties")
+@PropertySource("classpath:kr/co/itcen/config/app/properties/jdbc.properties") // properties를 읽어주는 어노테이션 (classpath를 잡아줌.)
 public class DBConfig {
 	
 	@Autowired
-	private Environment env; 
+	private Environment env; // PropertyResolver
 	
 	@Bean
 	public DataSource dataSource() {

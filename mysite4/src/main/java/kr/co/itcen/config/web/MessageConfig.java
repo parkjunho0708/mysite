@@ -11,9 +11,18 @@ public class MessageConfig {
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("kr/co/itcen/mysite/app/mybatis/properties/messages_ko");
+		messageSource.setBasename("kr/co/itcen/mysite/config/web/messages/messages_ko");
 		messageSource.setDefaultEncoding("UTF-8");
 
 		return messageSource;
 	}
+	
+//	<!-- MessageSource -->
+//	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+//	   <property name="basenames">
+//	      <list>
+//			<value>messages/messages_ko</value>
+//	      </list>
+//	   </property>
+//	</bean>
 }

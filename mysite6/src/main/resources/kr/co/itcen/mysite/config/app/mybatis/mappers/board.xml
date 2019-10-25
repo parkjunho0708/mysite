@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<select id="allBoardCount" resultType="integer">
+		<![CDATA[
+			select count(*) from board where status = 'true'
+		]]>
+	</select>
+
+	<select id="allBoardDataList" parameterType="map" resultType="boardvo">
+		<![CDATA[
+			select board.no, 
+			board.title, 
+			user.name as userName, 
+			board.hit, 
+			date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, 
+			board.g_no as groupNo, 
+			board.o_no as orderNo, 
+			board.depth as depth, 
+			board.status as status, 
+			user.no as userNo 
+			from user, board where user.no = board.user_no order by board.g_no desc, board.o_no asc 
+			limit #{startNum}, #{lastNum}
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+			insert into board values 
+			(null, #{title}, #{contents}, 0, now(), (select ifnull(max(g_no) + 1, 1) from board as groupNo),
+			 1, 0, #{filename}, 'true', #{userNo})
+		]]>
+	</insert>
+	
+	<select id="searchList" parameterType="map" resultType="boardvo">
+		<![CDATA[
+			select board.no, board.title, user.name as userName, board.hit, date_format(board.reg_date, '%Y-%m-%d %h:%i:%s') as regDate, board.g_no as groupNo, board.o_no as orderNo, board.depth as depth 
+			from user, board 
+			where user.no = board.user_no and (board.title like concat('%',#{kwd},'%') or board.contents like concat('%',#{kwd},'%')) and status = 'true' 
+			order by board.g_no desc, board.o_no asc limit #{startNum}, #{lastNum}
+		]]>
+	</select>
+	
+	<select id="countAllPostData" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from user, board 
+			where user.no = board.user_no and (board.title like concat('%',#{kwd},'%') or board.contents like concat('%',#{kwd},'%')) 
+			order by board.g_no desc, board.o_no asc
+		]]>
+	</select>
+	
+	<update id="increaseHit">
+		<![CDATA[
+			update board set hit = hit + 1 where no = #{boardNo}
+		]]>
+	</update>
+	
+	<select id="getOnePostData" parameterType="map" resultType="boardvo">
+		<![CDATA[
+			select board.no, board.title as title, board.contents as contents, board.filename as filename, user.no as userNo, user.name as userName 
+			from board, user 
+			where board.no = #{boardNo} and user.name = #{userName}
+		]]>
+	</select>
+	
+	<update id="updateModifiedData" parameterType="boardvo">
+		<![CDATA[
+			update board set title = #{title}, contents = #{contents} where no = #{no}
+		]]>
+	</update>
+	
+	<select id="getOneModifiedPostData" parameterType="boardvo" resultType="boardvo">
+		<![CDATA[
+			select board.no, board.title as title, board.contents as contents, board.filename as filename, user.no as userNo, user.name as userName 
+			from board, user 
+			where board.no = #{no} and user.name = #{userName}
+		]]>
+	</select>
+	
+	<select id="getGroupOrderDepthNo" resultType="boardvo">
+		<![CDATA[
+			select no, g_no as groupNo, o_no as orderNo, depth as depth from board where no = #{boardNo}
+		]]>
+	</select>
+	
+	<update id="updateOrderGroupNo" parameterType="map">
+		<![CDATA[
+			update board set o_no = o_no + 1 
+			where g_no = #{groupNo} and o_no >= #{orderNo}
+		]]>
+	</update>
+	
+	<insert id="insertReplyData" parameterType="boardvo">
+		<![CDATA[
+			insert into board values 
+			(null, #{title}, #{contents}, 0, now(), #{groupNo},
+			 #{orderNo}, #{depth}, #{filename}, #{status}, #{userNo})
+		]]>
+	</insert>
+	
+	<delete id="deleteData" parameterType="map">
+		<![CDATA[
+			update board set status = 'false' where no = #{boardNo} and 
+			(select user.password from user where user.no = #{userNo} and user.password = #{password})
+		]]>
+	</delete>
+
+</mapper>

@@ -7,7 +7,6 @@
 	<ul>
 		<li><a href="${pageContext.servletContext.contextPath}">박준호</a></li>
 		<li><a href="${pageContext.servletContext.contextPath}/guestbook/list">방명록</a></li>
-		<li><a href="${pageContext.servletContext.contextPath}/guestbook/ajax-list">방명록(ajax)</a></li>
 		<li><a href="${pageContext.servletContext.contextPath}/board/list?page=1">게시판</a></li>
 	</ul>
 </div>

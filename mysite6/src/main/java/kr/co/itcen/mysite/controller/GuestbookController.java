@@ -30,14 +30,6 @@ public class GuestbookController {
 		model.addAttribute("list", list);
 		return "guestbook/index";
 	}
-	
-	// 방명록(ajax) 리스트 접근
-	@RequestMapping(value = "/ajax-list")
-	public String indexAjax(Model model) {
-		List<GuestbookVo> list = guestbookDao.getList();
-		model.addAttribute("list", list);
-		return "guestbook/index-ajax";
-	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("no") Long no, Model model) {
@@ -52,16 +44,8 @@ public class GuestbookController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(
-			@ModelAttribute GuestbookVo vo) {
+	public String add(@ModelAttribute GuestbookVo vo) {
 		guestbookDao.insert(vo);
 		return "redirect:/guestbook/list";
-	}
-	
-	// 방명록(ajax) 데이터 추가
-	@RequestMapping(value = "/addAjax", method = RequestMethod.POST)
-	public String addAjaxList(@ModelAttribute GuestbookVo vo) {
-		guestbookDao.insert(vo);
-		return "redirect:/guestbook/ajax-list";
 	}
 }

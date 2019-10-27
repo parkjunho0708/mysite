@@ -14,11 +14,12 @@
 <script>
 $(function(){
 	$(document).on("click", "#dialog-link", function() {
+		var modal = document.getElementsByClassName('delete-form');
+		var i;
+		for (i = 0; i < modal.length; i++) {
+			modal[i].style.display = "block";
+		}
 		var dataNo = $(this).attr("data-no");
-		if($('#delete-form').css('display') == 'none'){
-			$('#delete-form').show();
-	    }
-		
 		console.log(dataNo);
 	});
 });
@@ -45,24 +46,27 @@ $(function(){
 							${fn:replace(vo.contents, newLineChar, "<br/>")}
 						</p>
 						<strong></strong>
-						<a id="dialog-link" href="#" data-no='${vo.no}'>삭제</a> 
+						<a id="dialog-link" data-no='${vo.no}'>삭제</a> 
 					</li>
 				</c:forEach>
 				</ul>
 			</div>
-			<div id="delete-form" title="메세지 삭제" style="display:none">
+			
+			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
   				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
   				<p class="validateTips error" style="display:none">비밀번호가 틀립니다.</p>
   				<form>
  					<input type="password" id="password-delete" value="" class="text ui-widget-content ui-corner-all">
 					<input type="hidden" id="hidden-no" value="">
-					<input type="submit" tabindex="-1" style="position:absolute; top:-1000px" value="삭제">
+					<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
   				</form>
 			</div>
+			
 			<div id="dialog-message" title="" style="display:none">
   				<p></p>
 			</div>						
 		</div>
+		
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
 			<c:param name="menu" value="guestbook-ajax"/>
 		</c:import>

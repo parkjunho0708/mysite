@@ -85,21 +85,21 @@
 	outline:none;
 }
 
-#guestbook.delete-form {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px;
+.delete-form {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-#guestbook.delete-form form {
+.delete-form form {
 	width:300px;
 	padding:10px;
 	border:1px solid #666;
@@ -107,12 +107,97 @@
 	margin:50px auto;
 }
 
-#guestbook.delete-form a	{ display:block; margin:20px auto; width:110px }
-#guestbook.delete-form input[type="password"] {
+.delete-form a	{ display:block; margin:20px auto; width:110px }
+.delete-form input[type="password"] {
 	margin-top:5px;
 	width:284px;
 }
-#guestbook.delete-form input[type="submit"] {
+.delete-form input[type="submit"] {
 	width:296px;
 }		
-#guestbook.delete-message p	{ padding:100px; height:50px; text-align:center }
+.delete-message p	{ padding:100px; height:50px; text-align:center }
+
+
+
+/* @CHARSET "UTF-8";
+@import "mysite.css";
+
+#guestbook		{ margin:20px auto;	width:540px; }
+
+#guestbook h1	{
+	color: #464A4F;
+	margin-bottom: 10px;
+	padding-left: 40px;
+	background: url('/mysite03/assets/images/guestbook.png') 0 0 no-repeat;	
+	background-size: 35px;
+} 
+
+#guestbook form input,
+#guestbook form textarea { 
+	display:block;
+	border: 1px solid #a9a9a9;
+	outline: none;
+	width: 540px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+#guestbook form textarea {
+	height:80px;
+	resize: none;
+}
+
+#guestbook form input[type="submit"] {
+	width:552px;
+	font-weight:bold;
+	color:#846b5c;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+#guestbook form input[type="submit"]:hover {
+	background-color: #65b791;
+	color: #fff;
+}
+
+#guestbook ul {
+	width:552px;
+	margin-top: 20px;
+	border-top:1px solid #a9a9a9;
+}
+
+#guestbook ul li {
+	position: relative;
+	width:100%;
+	margin-top:20px;
+	padding-left:50px;
+	background: url('/mysite03/assets/images/user.png') 0 5px no-repeat;	
+}
+
+#guestbook ul li strong,
+#guestbook ul li a {
+	display: block;
+}
+
+#guestbook ul li strong {
+	color:#777;
+}
+
+#guestbook ul li p {
+	width: 465px;
+	margin: 5px 0;
+	padding: 10px;
+	border: 1px solid #cacccc;
+	border-radius: 4px;
+	background-color: #eaeaea;
+}
+
+#guestbook ul li a {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	left:18px;
+	top:26px;
+	font-size: 0;
+	background: url('/mysite03/assets/images/delete.png') 0 0 no-repeat;
+} */

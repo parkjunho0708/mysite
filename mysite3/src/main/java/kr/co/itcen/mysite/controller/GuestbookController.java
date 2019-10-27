@@ -38,6 +38,14 @@ public class GuestbookController {
 		model.addAttribute("list", list);
 		return "guestbook/index-ajax";
 	}
+	
+	// 방명록(ajax) 리스트 접근
+		@RequestMapping(value = "/ajax-guestbook-list")
+		public String indexGuestbookAjax(Model model) {
+			List<GuestbookVo> list = guestbookDao.getList();
+			model.addAttribute("list", list);
+			return "guestbook/index-guestbook-ajax";
+		}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("no") Long no, Model model) {

@@ -320,7 +320,7 @@ body{
 				<br>
 				<button id="btn-next">jquery flash </button>
 				<br>
-				<form id="add-form" action="/dd" method="post">
+				<form id="add-form" action="${pageContext.servletContext.contextPath}/guestbook/addAjax" method="post">
 					<input type="text" id="input-name" placeholder="이름">
 					<input type="password" id="input-password" placeholder="비밀번호">
 					<textarea id="tx-content" placeholder="내용을 입력해 주세요."></textarea>

@@ -7,21 +7,52 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/guestbook-ajax.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/guestbook-spa.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 $(function(){
-	$(document).on("click", "#dialog-link", function() {
-		var modal = document.getElementsByClassName('delete-form');
-		var i;
-		for (i = 0; i < modal.length; i++) {
-			modal[i].style.display = "block";
-		}
-		var dataNo = $(this).attr("data-no");
-		console.log(dataNo);
-	});
+	$('#add-form').submit(function(event){
+		event.preventDefault();
+		//validation(client side)
+		vo = {};
+		vo.name = $("#input-name").val();
+		vo.password = $("#input-password").val();
+		vo.contents = $("#tx-content").val();
+		
+		//console.log($.param(vo));
+		
+		//ajax 통신
+		$.ajax({
+			url: "/mysite3/api/guestbook/add",
+			type: "post",
+			contentType: 'application/json', //보내는 데이터의 타입: post방식 json
+			dataType: 'json',							   //받는 데이터의 타입
+			data: JSON.stringify(vo),
+			success: function(response){
+				//console.log(response);
+				if(response.result != "success"){
+					console.error(response.message);
+					return;
+				}
+				
+				// rendering
+				var html = 
+					"<li data-no='" + response.data.no + "'>" +
+						"<strong>" + response.data.name + "</strong>" +
+						"<p>" + response.data.contents + "</p>" +
+						"<strong></strong>" +
+						"<a href='' data-no='" + response.data.no + "'>삭제</a>" + 
+					"</li>";
+				$("#list-guestbook").prepend(html);
+				$("#add-form")[0].reset();
+			},
+			error: function(xhr, status, e){
+				console.error(status + ":" + e);
+			}
+		});
+	})
 });
 </script>
 </head>
@@ -31,7 +62,7 @@ $(function(){
 		<div id="content">
 			<div id="guestbook">
 				<h1>방명록</h1>
-				<form id="add-form" action="${pageContext.servletContext.contextPath}/guestbook/addAjax" method="post">
+				<form id="add-form" action="${pageContext.servletContext.contextPath}/api/guestbook/add" method="post">
 					<input type="text" id="input-name" name="name" placeholder="이름">
 					<input type="password" id="input-password" name="password" placeholder="비밀번호">
 					<textarea id="tx-content" name="contents" placeholder="내용을 입력해 주세요."></textarea>
